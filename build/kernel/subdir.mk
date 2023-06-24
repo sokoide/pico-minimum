@@ -1,13 +1,8 @@
-# Add inputs and outputs from these tool invocations to the build variables
 C_SRCS += \
 ../kernel/syslib.c
 
 OBJS += \
 ./kernel/syslib.o
-
-C_DEPS += \
-./kernel/syslib.d
-
 
 # Each subdirectory must supply rules for building sources it contributes
 kernel/%.o: ../kernel/%.c kernel/subdir.mk

@@ -2,11 +2,14 @@
 #include <knldef.h>
 
 void tm_com_init(void) {
-    out_w(UART0_BASE + UARTx_IBRD, 67); /* ボーレート設定 */
+    // https://github.com/raspberrypi/pico-sdk/blob/master/src/rp2_common/hardware_uart/uart.c#L128C1-L155C1
+    // set baudrate
+    out_w(UART0_BASE + UARTx_IBRD, 67);
     out_w(UART0_BASE + UARTx_FBRD, 52);
-    out_w(UART0_BASE + UARTx_LCR_H, 0x70); /* データ形式設定 */
-    out_w(UART0_BASE + UARTx_CR,
-          UART_CR_RXE | UART_CR_TXE | UART_CR_EN); /* 通信イネーブル */
+    // set format
+    out_w(UART0_BASE + UARTx_LCR_H, 0x70);
+    // enable UART
+    out_w(UART0_BASE + UARTx_CR, UART_CR_RXE | UART_CR_TXE | UART_CR_EN);
 }
 
 UINT tm_putstring(char* str) {
@@ -14,7 +17,7 @@ UINT tm_putstring(char* str) {
 
     while (*str) {
         while ((in_w(UART0_BASE + UARTx_FR) & UART_FR_TXFF) != 0)
-            ; /* wait for send FIFO queue */
+            ; /* wait for outgoing FIFO queue */
         out_w(UART0_BASE + UARTx_DR, *str++);
         cnt++;
     }

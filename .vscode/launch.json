@@ -3,7 +3,7 @@
     "configurations": [
         {
             "cwd": "${workspaceRoot}",
-            "executable": "./Debug/minimum.elf",
+            "executable": "./build/minimum.elf",
             "name": "Debug with OpenOCD",
             "request": "launch",
             "type": "cortex-debug",
