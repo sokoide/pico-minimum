@@ -27,20 +27,20 @@ all: main-build
 main-build: $(BUILD_ARTIFACT) secondary-outputs
 
 # Tool invocations
-$(BUILD_ARTIFACT): $(OBJS) $(USER_OBJS) makefile objects.mk
+$(BUILD_ARTIFACT): $(OBJS) $(USER_OBJS) Makefile objects.mk
 	@echo 'Building target: $@'
 	@echo 'Invoking: GNU Arm Cross C Linker'
 	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -ffreestanding -g3 -T "../linker/pico_memmap.ld" -Xlinker --gc-sections -Wl,-Map,$(BUILD_MAP) -o $(BUILD_ARTIFACT) $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-$(BUILD_HEX): $(BUILD_ARTIFACT) makefile objects.mk
+$(BUILD_HEX): $(BUILD_ARTIFACT) Makefile objects.mk
 	@echo 'Invoking: GNU Arm Cross Create Flash Image'
 	arm-none-eabi-objcopy -O ihex $(BUILD_ARTIFACT) $(BUILD_HEX)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-$(BUILD_SIZE): $(BUILD_ARTIFACT) makefile objects.mk
+$(BUILD_SIZE): $(BUILD_ARTIFACT) Makefile objects.mk
 	@echo 'Invoking: GNU Arm Cross Print Size'
 	arm-none-eabi-size --format=berkeley $(BUILD_ARTIFACT)
 	@echo 'Finished building: $@'
@@ -53,7 +53,7 @@ clean:
 
 secondary-outputs: $(BUILD_HEX) $(BUILD_SIZE)
 
-run: $(BUILD_HEX)
+r/un: $(BUILD_HEX)
 	cp $(BUILD_HEX) ~/repo/oss/rp2040js/hello_uart.hex
 	cd  ~/repo/oss/rp2040js && npm start
 
