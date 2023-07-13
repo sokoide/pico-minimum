@@ -15,11 +15,11 @@ void tm_com_init(void) {
 UINT tm_putstring(char* str) {
     UINT cnt = 0;
 
-    while (*str) {
-        while ((in_w(UART0_BASE + UARTx_FR) & UART_FR_TXFF) != 0)
-            ; /* wait for outgoing FIFO queue */
-        out_w(UART0_BASE + UARTx_DR, *str++);
-        cnt++;
-    }
+     while (*str) {
+         while ((in_w(UART0_BASE + UARTx_FR) & UART_FR_TXFF) != 0)
+             ; // wait for outgoing FIFO queue
+         out_w(UART0_BASE + UARTx_DR, *str++);
+         cnt++;
+     }
     return cnt;
 }
